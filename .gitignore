@@ -1,0 +1,7 @@
+# Analysis output (contains data from the analysed repository)
+git-contributions/
+*_rankings/
+
+__pycache__/
+*.pyc
+.DS_Store
