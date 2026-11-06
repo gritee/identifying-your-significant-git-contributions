@@ -1,0 +1,16 @@
+{
+  "name": "git-contributions",
+  "description": "Rank one author's commits in a git repository to find their most significant contributions, and optionally write them up as STAR stories.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Gritee"
+  },
+  "repository": "https://github.com/Gritee/identifying-your-significant-git-contributions",
+  "keywords": [
+    "git",
+    "career",
+    "performance-review",
+    "star"
+  ],
+  "license": "MIT"
+}

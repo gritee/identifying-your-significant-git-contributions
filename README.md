@@ -28,7 +28,7 @@ Use it to get a head start on a performance review, résumé or interview prep. 
 4. Claude picks the top 10 contributions, favouring commits that rank high in many lists, and points out work the metrics undervalue, such as a series of small commits on one theme.
 5. Optionally writes each one up in STAR format, using the commit messages and diffs plus any context you add.
 
-The details are in [SKILL.md](SKILL.md) and the two scripts in [scripts/](scripts/).
+The details are in [SKILL.md](skills/identifying-your-significant-git-contributions/SKILL.md) and the two scripts in [scripts/](skills/identifying-your-significant-git-contributions/scripts/).
 
 ## Requirements
 
@@ -39,17 +39,18 @@ The details are in [SKILL.md](SKILL.md) and the two scripts in [scripts/](script
 
 ## Install
 
-Clone into your Claude Code skills directory:
+As a plugin, from the [Gritee marketplace](https://github.com/Gritee/claude-plugins):
 
-```bash
-git clone https://github.com/Gritee/identifying-your-significant-git-contributions.git ~/.claude/skills/identifying-your-significant-git-contributions
+```
+/plugin marketplace add https://github.com/Gritee/claude-plugins.git
+/plugin install git-contributions@gritee
 ```
 
-To make it available in one project only, clone it into that project's `.claude/skills/` folder instead.
+Or as a standalone skill, copy [skills/identifying-your-significant-git-contributions/](skills/identifying-your-significant-git-contributions/) into `~/.claude/skills/` (or a project's `.claude/skills/` folder).
 
 ## Usage
 
-Run `/identifying-your-significant-git-contributions` in Claude Code, or ask something like:
+Run `/git-contributions:identifying-your-significant-git-contributions` (plugin) or `/identifying-your-significant-git-contributions` (standalone skill) in Claude Code, or ask something like:
 
 > Find my most significant contributions to this repo
 
@@ -93,11 +94,11 @@ The patterns cover common tools and frameworks across Ruby, JavaScript/TypeScrip
 
 | What's going wrong | Where to change it |
 |---|---|
-| Lint or format commits from your tools appear in the rankings | `MECHANICAL_TITLE_RE` in [scripts/rank_contributions.py](scripts/rank_contributions.py) |
-| Framework or runtime upgrades aren't treated as high-stakes work | `PLATFORM_UPGRADE_RE` in [scripts/rank_contributions.py](scripts/rank_contributions.py) |
-| Generated code, build output or lockfiles count as authored lines | `GENERATED_RE` and `LOCKFILES` in [scripts/git_contributions_csv.py](scripts/git_contributions_csv.py) |
-| Dependency manifests, tests, migrations or CI files are misclassified | `DEP_MANIFESTS`, `TEST_RE`, `MIGRATION_RE` and `CI_INFRA_RE` in [scripts/git_contributions_csv.py](scripts/git_contributions_csv.py) |
-| The overall ordering feels wrong | `RANKINGS` and `COMPOSITE_WEIGHTS` in [scripts/rank_contributions.py](scripts/rank_contributions.py) |
+| Lint or format commits from your tools appear in the rankings | `MECHANICAL_TITLE_RE` in [scripts/rank_contributions.py](skills/identifying-your-significant-git-contributions/scripts/rank_contributions.py) |
+| Framework or runtime upgrades aren't treated as high-stakes work | `PLATFORM_UPGRADE_RE` in [scripts/rank_contributions.py](skills/identifying-your-significant-git-contributions/scripts/rank_contributions.py) |
+| Generated code, build output or lockfiles count as authored lines | `GENERATED_RE` and `LOCKFILES` in [scripts/git_contributions_csv.py](skills/identifying-your-significant-git-contributions/scripts/git_contributions_csv.py) |
+| Dependency manifests, tests, migrations or CI files are misclassified | `DEP_MANIFESTS`, `TEST_RE`, `MIGRATION_RE` and `CI_INFRA_RE` in [scripts/git_contributions_csv.py](skills/identifying-your-significant-git-contributions/scripts/git_contributions_csv.py) |
+| The overall ordering feels wrong | `RANKINGS` and `COMPOSITE_WEIGHTS` in [scripts/rank_contributions.py](skills/identifying-your-significant-git-contributions/scripts/rank_contributions.py) |
 
 Avoid ambiguous words in the title patterns. For example, `spring` is both a Java framework and a Rails gem, so the upgrade pattern uses `spring boot` instead.
 
@@ -112,8 +113,8 @@ If you change the path patterns in `git_contributions_csv.py`, regenerate the CS
 Both scripts work without Claude:
 
 ```bash
-python3 scripts/git_contributions_csv.py -C /path/to/repo --author "you@example.com" --rev main -o out.csv
-python3 scripts/rank_contributions.py out.csv --out-dir rankings --top 20
+python3 skills/identifying-your-significant-git-contributions/scripts/git_contributions_csv.py -C /path/to/repo --author "you@example.com" --rev main -o out.csv
+python3 skills/identifying-your-significant-git-contributions/scripts/rank_contributions.py out.csv --out-dir rankings --top 20
 ```
 
 Run either one with `--help` to see all options.
